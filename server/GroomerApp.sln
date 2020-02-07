@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroomerApp.API", "GroomerApp.API\GroomerApp.API.csproj", "{C04B8E69-3CFB-4460-AED8-B8F33CB0452A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C04B8E69-3CFB-4460-AED8-B8F33CB0452A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C04B8E69-3CFB-4460-AED8-B8F33CB0452A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C04B8E69-3CFB-4460-AED8-B8F33CB0452A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C04B8E69-3CFB-4460-AED8-B8F33CB0452A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ED60EF4E-7C7A-4005-B093-47902CA541A4}
+	EndGlobalSection
+EndGlobal
