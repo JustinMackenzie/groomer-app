@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroomerApp.API", "GroomerApp.API\GroomerApp.API.csproj", "{C04B8E69-3CFB-4460-AED8-B8F33CB0452A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GroomerApp.API", "GroomerApp.API\GroomerApp.API.csproj", "{C04B8E69-3CFB-4460-AED8-B8F33CB0452A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroomerApp.Core", "GroomerApp.Core\GroomerApp.Core.csproj", "{A5CD85AC-A96B-4B03-8E62-BE07342C4667}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroomerApp.Infrastructure", "GroomerApp.Infrastructure\GroomerApp.Infrastructure.csproj", "{FB57C04D-1705-40F9-B990-8A65966F5450}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{C04B8E69-3CFB-4460-AED8-B8F33CB0452A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C04B8E69-3CFB-4460-AED8-B8F33CB0452A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C04B8E69-3CFB-4460-AED8-B8F33CB0452A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5CD85AC-A96B-4B03-8E62-BE07342C4667}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5CD85AC-A96B-4B03-8E62-BE07342C4667}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5CD85AC-A96B-4B03-8E62-BE07342C4667}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5CD85AC-A96B-4B03-8E62-BE07342C4667}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB57C04D-1705-40F9-B990-8A65966F5450}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB57C04D-1705-40F9-B990-8A65966F5450}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB57C04D-1705-40F9-B990-8A65966F5450}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB57C04D-1705-40F9-B990-8A65966F5450}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

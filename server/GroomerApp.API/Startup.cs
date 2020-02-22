@@ -4,11 +4,18 @@
 
 namespace GroomerApp.API
 {
+    using AutoMapper;
+    using GroomerApp.API.Mapping;
+    using GroomerApp.Core.Interfaces;
+    using GroomerApp.Infrastructure.Data;
+    using GroomerApp.Infrastructure.Repositories;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using Microsoft.OpenApi.Models;
 
     /// <summary>
     /// Contains the bootstrapping logic for the application.
@@ -39,6 +46,18 @@ namespace GroomerApp.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddAutoMapper(typeof(DtoMappingProfile));
+
+            services.AddDbContext<GroomerContext>(opt =>
+                opt.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Groomer API", Version = "v1" });
+            });
         }
 
         /// <summary>
@@ -54,6 +73,14 @@ namespace GroomerApp.API
             }
 
             app.UseHttpsRedirection();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Groomer API");
+                c.RoutePrefix = string.Empty;
+            });
 
             app.UseRouting();
 
