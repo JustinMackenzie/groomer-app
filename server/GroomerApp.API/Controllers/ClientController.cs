@@ -11,6 +11,7 @@ namespace GroomerApp.API.Controllers
     using GroomerApp.API.Requests;
     using GroomerApp.Core.Entities;
     using GroomerApp.Core.Interfaces;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
 
@@ -68,8 +69,8 @@ namespace GroomerApp.API.Controllers
         /// <response code="200">Returns the clients.</response>
         /// <response code="500">If there is was an error finding the clients.</response>
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<Client>), 200)]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(typeof(IEnumerable<Client>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get()
         {
             try
@@ -80,7 +81,7 @@ namespace GroomerApp.API.Controllers
             catch (Exception ex)
             {
                 this.logger.LogError(ex, "Failed to get all clients.");
-                return this.StatusCode(500);
+                return this.StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
 
@@ -96,9 +97,9 @@ namespace GroomerApp.API.Controllers
         /// <response code="500">If there is was an error finding the client.</response>
         [HttpGet("{id}")]
         [ActionName("GetClient")]
-        [ProducesResponseType(typeof(Client), 200)]
-        [ProducesResponseType(404)]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(typeof(Client), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetById(Guid id)
         {
             try
@@ -115,7 +116,7 @@ namespace GroomerApp.API.Controllers
             catch (Exception ex)
             {
                 this.logger.LogError(ex, "Failed to get the client.");
-                return this.StatusCode(500);
+                return this.StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
 
@@ -127,8 +128,8 @@ namespace GroomerApp.API.Controllers
         /// <response code="201">Returns the client that was created.</response>
         /// <response code="500">If there is was an error creating the client.</response>
         [HttpPost]
-        [ProducesResponseType(typeof(Client), 201)]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(typeof(Client), StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreateClient([FromBody] CreateOrUpdateClientRequest request)
         {
             try
@@ -139,7 +140,7 @@ namespace GroomerApp.API.Controllers
             catch (Exception ex)
             {
                 this.logger.LogError(ex, "Failed to create the client.");
-                return this.StatusCode(500);
+                return this.StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
 
@@ -153,9 +154,9 @@ namespace GroomerApp.API.Controllers
         /// <response code="404">If there is no client with the given identifier.</response>
         /// <response code="500">If there is was an error finding the client.</response>
         [HttpPut("{id}")]
-        [ProducesResponseType(typeof(Client), 200)]
-        [ProducesResponseType(404)]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(typeof(Client), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> UpdateClient(Guid id, [FromBody] CreateOrUpdateClientRequest request)
         {
             try
@@ -179,7 +180,7 @@ namespace GroomerApp.API.Controllers
             catch (Exception ex)
             {
                 this.logger.LogError(ex, "Failed to update the client.");
-                return this.StatusCode(500);
+                return this.StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
 
@@ -192,9 +193,9 @@ namespace GroomerApp.API.Controllers
         /// <response code="404">If there is no client with the given identifier.</response>
         /// <response code="500">If there is was an error deleting the client.</response>
         [HttpDelete("{id}")]
-        [ProducesResponseType(typeof(Client), 200)]
-        [ProducesResponseType(404)]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(typeof(Client), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> DeleteClient(Guid id)
         {
             try
@@ -213,7 +214,7 @@ namespace GroomerApp.API.Controllers
             catch (Exception ex)
             {
                 this.logger.LogError(ex, "Failed to delete the client.");
-                return this.StatusCode(500);
+                return this.StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
 
@@ -224,8 +225,8 @@ namespace GroomerApp.API.Controllers
         /// <param name="request">The request.</param>
         /// <returns>The pet that was created.</returns>
         [HttpPost("{id}/pet")]
-        [ProducesResponseType(typeof(Client), 201)]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(typeof(Client), StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreatePetForOwner(Guid id, [FromBody] CreateOrUpdatePetRequest request)
         {
             try
@@ -239,7 +240,7 @@ namespace GroomerApp.API.Controllers
             catch (Exception ex)
             {
                 this.logger.LogError(ex, "Failed to create the pet.");
-                return this.StatusCode(500);
+                return this.StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
     }

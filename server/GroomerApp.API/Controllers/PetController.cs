@@ -11,6 +11,7 @@ namespace GroomerApp.API.Controllers
     using GroomerApp.API.Requests;
     using GroomerApp.Core.Entities;
     using GroomerApp.Core.Interfaces;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
 
@@ -37,6 +38,12 @@ namespace GroomerApp.API.Controllers
         /// </summary>
         private readonly IMapper mapper;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PetController"/> class.
+        /// </summary>
+        /// <param name="petRepository">The pet repository.</param>
+        /// <param name="logger">The logger.</param>
+        /// <param name="mapper">The mapper.</param>
         public PetController(
             IRepository<Pet> petRepository,
             ILogger<PetController> logger,
@@ -54,8 +61,8 @@ namespace GroomerApp.API.Controllers
         /// <response code="200">Returns the pets.</response>
         /// <response code="500">If there is was an error finding the pets.</response>
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<Pet>), 200)]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(typeof(IEnumerable<Pet>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get()
         {
             try
@@ -66,7 +73,7 @@ namespace GroomerApp.API.Controllers
             catch (Exception ex)
             {
                 this.logger.LogError(ex, "Failed to get all pets.");
-                return this.StatusCode(500);
+                return this.StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
 
@@ -82,9 +89,9 @@ namespace GroomerApp.API.Controllers
         /// <response code="500">If there is was an error finding the pet.</response>
         [HttpGet("{id}")]
         [ActionName("GetPet")]
-        [ProducesResponseType(typeof(Pet), 200)]
-        [ProducesResponseType(404)]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(typeof(Pet), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetById(Guid id)
         {
             try
@@ -101,7 +108,7 @@ namespace GroomerApp.API.Controllers
             catch (Exception ex)
             {
                 this.logger.LogError(ex, "Failed to get the pet.");
-                return this.StatusCode(500);
+                return this.StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
 
@@ -115,9 +122,9 @@ namespace GroomerApp.API.Controllers
         /// <response code="404">If there is no pet with the given identifier.</response>
         /// <response code="500">If there is was an error finding the pet.</response>
         [HttpPut("{id}")]
-        [ProducesResponseType(typeof(Pet), 200)]
-        [ProducesResponseType(404)]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(typeof(Pet), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> UpdatePet(Guid id, [FromBody] CreateOrUpdatePetRequest request)
         {
             try
@@ -141,7 +148,7 @@ namespace GroomerApp.API.Controllers
             catch (Exception ex)
             {
                 this.logger.LogError(ex, "Failed to update the pet.");
-                return this.StatusCode(500);
+                return this.StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
 
@@ -154,9 +161,9 @@ namespace GroomerApp.API.Controllers
         /// <response code="404">If there is no pet with the given identifier.</response>
         /// <response code="500">If there is was an error deleting the pet.</response>
         [HttpDelete("{id}")]
-        [ProducesResponseType(typeof(Pet), 200)]
-        [ProducesResponseType(404)]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(typeof(Pet), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> DeletePet(Guid id)
         {
             try
@@ -175,7 +182,7 @@ namespace GroomerApp.API.Controllers
             catch (Exception ex)
             {
                 this.logger.LogError(ex, "Failed to delete the pet.");
-                return this.StatusCode(500);
+                return this.StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
     }
