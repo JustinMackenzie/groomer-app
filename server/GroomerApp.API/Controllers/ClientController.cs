@@ -25,7 +25,12 @@ namespace GroomerApp.API.Controllers
         /// <summary>
         /// The client repository.
         /// </summary>
-        private readonly IRepository<Client> repository;
+        private readonly IRepository<Client> clientRepository;
+
+        /// <summary>
+        /// The pet repository.
+        /// </summary>
+        private readonly IRepository<Pet> petRepository;
 
         /// <summary>
         /// The logger.
@@ -40,15 +45,18 @@ namespace GroomerApp.API.Controllers
         /// <summary>
         /// Initializes a new instance of the <see cref="ClientController" /> class.
         /// </summary>
-        /// <param name="repository">The repository.</param>
+        /// <param name="clientRepository">The client repository.</param>
+        /// <param name="petRepository">The pet repository.</param>
         /// <param name="logger">The logger.</param>
         /// <param name="mapper">The mapper.</param>
         public ClientController(
-            IRepository<Client> repository,
+            IRepository<Client> clientRepository,
+            IRepository<Pet> petRepository,
             ILogger<ClientController> logger,
             IMapper mapper)
         {
-            this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this.clientRepository = clientRepository ?? throw new ArgumentNullException(nameof(clientRepository));
+            this.petRepository = petRepository ?? throw new ArgumentNullException(nameof(petRepository));
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
             this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
@@ -66,7 +74,7 @@ namespace GroomerApp.API.Controllers
         {
             try
             {
-                IEnumerable<Client> clients = await this.repository.GetAll();
+                IEnumerable<Client> clients = await this.clientRepository.GetAll();
                 return this.Ok(clients);
             }
             catch (Exception ex)
@@ -95,7 +103,7 @@ namespace GroomerApp.API.Controllers
         {
             try
             {
-                Client client = await this.repository.GetById(id);
+                Client client = await this.clientRepository.GetById(id);
 
                 if (client == null)
                 {
@@ -125,7 +133,7 @@ namespace GroomerApp.API.Controllers
         {
             try
             {
-                Client client = await this.repository.Add(this.mapper.Map<Client>(request));
+                Client client = await this.clientRepository.Add(this.mapper.Map<Client>(request));
                 return this.CreatedAtAction("GetClient", new { id = client.Id }, client);
             }
             catch (Exception ex)
@@ -152,7 +160,7 @@ namespace GroomerApp.API.Controllers
         {
             try
             {
-                Client existingClient = await this.repository.GetById(id);
+                Client existingClient = await this.clientRepository.GetById(id);
 
                 if (existingClient == null)
                 {
@@ -165,7 +173,7 @@ namespace GroomerApp.API.Controllers
                 existingClient.LastName = request.LastName;
                 existingClient.Phone = request.Phone;
 
-                Client client = await this.repository.Update(existingClient);
+                Client client = await this.clientRepository.Update(existingClient);
                 return this.Ok(client);
             }
             catch (Exception ex)
@@ -191,7 +199,7 @@ namespace GroomerApp.API.Controllers
         {
             try
             {
-                Client existingClient = await this.repository.GetById(id);
+                Client existingClient = await this.clientRepository.GetById(id);
 
                 if (existingClient == null)
                 {
@@ -199,12 +207,38 @@ namespace GroomerApp.API.Controllers
                     return this.NotFound();
                 }
 
-                Client client = await this.repository.Remove(existingClient);
+                Client client = await this.clientRepository.Remove(existingClient);
                 return this.Ok(client);
             }
             catch (Exception ex)
             {
                 this.logger.LogError(ex, "Failed to delete the client.");
+                return this.StatusCode(500);
+            }
+        }
+
+        /// <summary>
+        /// Creates the pet for a given owner.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="request">The request.</param>
+        /// <returns>The pet that was created.</returns>
+        [HttpPost("{id}/pet")]
+        [ProducesResponseType(typeof(Client), 201)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> CreatePetForOwner(Guid id, [FromBody] CreateOrUpdatePetRequest request)
+        {
+            try
+            {
+                Pet newPet = this.mapper.Map<Pet>(request);
+                newPet.OwnerId = id;
+
+                Pet pet = await this.petRepository.Add(newPet);
+                return this.CreatedAtAction("GetPet", "Pet", new { id = pet.Id }, pet);
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogError(ex, "Failed to create the pet.");
                 return this.StatusCode(500);
             }
         }

@@ -7,7 +7,7 @@ namespace GroomerApp.API.Requests
     using System.ComponentModel.DataAnnotations;
 
     /// <summary>
-    /// Represents the data for a request to create a new client.
+    /// Represents the data for a request to create a new client or update an existing one.
     /// </summary>
     public class CreateOrUpdateClientRequest
     {

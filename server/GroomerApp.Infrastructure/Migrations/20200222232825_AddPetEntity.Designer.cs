@@ -4,14 +4,16 @@ using GroomerApp.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GroomerApp.Infrastructure.Migrations
 {
     [DbContext(typeof(GroomerContext))]
-    partial class GroomerContextModelSnapshot : ModelSnapshot
+    [Migration("20200222232825_AddPetEntity")]
+    partial class AddPetEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

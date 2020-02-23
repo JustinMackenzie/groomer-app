@@ -4,6 +4,8 @@
 
 namespace GroomerApp.Core.Entities
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// Represents a grooming client that owns pets that require grooming.
     /// </summary>
@@ -40,5 +42,13 @@ namespace GroomerApp.Core.Entities
         /// The phone.
         /// </value>
         public string Phone { get; set; }
+
+        /// <summary>
+        /// Gets or sets the pets.
+        /// </summary>
+        /// <value>
+        /// The pets.
+        /// </value>
+        public ICollection<Pet> Pets { get; set; }
     }
 }

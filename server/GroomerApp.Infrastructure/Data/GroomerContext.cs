@@ -31,6 +31,14 @@ namespace GroomerApp.Infrastructure.Data
         public DbSet<Client> Clients { get; set; }
 
         /// <summary>
+        /// Gets or sets the pets.
+        /// </summary>
+        /// <value>
+        /// The pets.
+        /// </value>
+        public DbSet<Pet> Pets { get; set; }
+
+        /// <summary>
         /// Override this method to further configure the model that was discovered by convention from the entity types
         /// exposed in <see cref="T:Microsoft.EntityFrameworkCore.DbSet`1" /> properties on your derived context. The resulting model may be cached
         /// and re-used for subsequent instances of your derived context.
@@ -44,11 +52,22 @@ namespace GroomerApp.Infrastructure.Data
         /// </remarks>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Client configuration.
             modelBuilder.Entity<Client>().ToTable("Client");
             modelBuilder.Entity<Client>().Property(c => c.Email).IsRequired();
             modelBuilder.Entity<Client>().Property(c => c.FirstName).IsRequired();
             modelBuilder.Entity<Client>().Property(c => c.LastName).IsRequired();
             modelBuilder.Entity<Client>().Property(c => c.Phone).IsRequired();
+
+            // Pet configuration.
+            modelBuilder.Entity<Pet>().ToTable("Pet");
+            modelBuilder.Entity<Pet>().Property(c => c.Name).IsRequired();
+            modelBuilder.Entity<Pet>().Property(c => c.DateOfBirth).IsRequired();
+            modelBuilder.Entity<Pet>().Property(c => c.Breed).IsRequired();
+            modelBuilder.Entity<Pet>().Property(c => c.OwnerId).IsRequired();
+            modelBuilder.Entity<Pet>()
+                .HasOne(p => p.Owner)
+                .WithMany(c => c.Pets);
         }
     }
 }

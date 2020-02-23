@@ -20,6 +20,7 @@ namespace GroomerApp.API.Mapping
         public DtoMappingProfile()
         {
             this.CreateMap<CreateOrUpdateClientRequest, Client>();
+            this.CreateMap<CreateOrUpdatePetRequest, Pet>();
         }
     }
 }
