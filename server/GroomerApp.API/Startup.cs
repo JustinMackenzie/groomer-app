@@ -74,6 +74,13 @@ namespace GroomerApp.API
 
             app.UseHttpsRedirection();
 
+            app.UseCors((policy) =>
+            {
+                policy.AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+            });
+
             app.UseSwagger();
 
             app.UseSwaggerUI(c =>
